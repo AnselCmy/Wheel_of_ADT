@@ -1,3 +1,18 @@
+/****************
+Structure:
+    typedef struct StackNode
+    {
+        ElementType data;
+        struct StackNode* next;
+    }Stack;
+Function:
+    Stack* CreatStack()
+    int IsEmpty(Stack*)
+    void Push(ElementType, Stack*)
+    void Pop(Stack* )
+    void PrintStack(Stack*)
+    ElementType Top(Stack*)
+*****************/
 #include <stdio.h>
 #include <stdlib.h>
 #define ElementType int
