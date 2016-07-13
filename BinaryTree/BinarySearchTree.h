@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "BST_stack.h"
 #define ElementType int
 
 typedef struct TreeNode 
@@ -100,6 +101,25 @@ SearchTree* FindMin(SearchTree* BST)
 	}
 }
 
+SearchTree* FindMax(SearchTree* BST)
+{
+	if(BST == NULL)
+	{
+		return NULL;
+	}
+	else
+	{
+		if(BST->right != NULL)
+		{
+			return FindMax(BST->right);
+		}
+		else
+		{
+			return BST;
+		}
+	}
+}
+
 SearchTree* Delete(ElementType num, SearchTree* BST)
 {
 	if(BST == NULL)
@@ -114,7 +134,7 @@ SearchTree* Delete(ElementType num, SearchTree* BST)
 	{
 		BST->right = Delete(num, BST->right);
 	}
-	else
+	else if(num == BST->data)
 	{
 		if(BST->left != NULL && BST->right != NULL)
 		{
@@ -138,23 +158,123 @@ SearchTree* Delete(ElementType num, SearchTree* BST)
 	return BST;
 }
 
-SearchTree* FindMax(SearchTree* BST)
+int GetHeight(SearchTree *BST)
 {
+	int leftHeight = 0, rightHeight = 0;
 	if(BST == NULL)
 	{
-		return NULL;
-	}
-	else
+		return 0;
+	} 
+	else 
 	{
-		if(BST->right != NULL)
+		leftHeight = GetHeight(BST->left);
+		rightHeight = GetHeight(BST->right);
+		return (leftHeight>rightHeight ? leftHeight : rightHeight) + 1;
+	}
+}
+
+int GetNodeNum(SearchTree *BST)
+{
+	int leftNum = 0, rightNum = 0;
+	if(BST == NULL)
+	{
+		return 0;
+	}
+	else 
+	{
+		leftNum = GetNodeNum(BST->left);
+		rightNum = GetNodeNum(BST->right);
+		return (leftNum + rightNum) + 1;
+	}
+}
+
+int GetLeafNum(SearchTree *BST)
+{
+	int leftLeaf = 0, rightLeaf = 0;
+	if(BST)
+	{
+		if(BST->right == NULL && BST->left == NULL)
 		{
-			return FindMax(BST->right);
+			return 1;
 		}
 		else
 		{
-			return BST;
+			leftLeaf = GetLeafNum(BST->left);
+			rightLeaf = GetLeafNum(BST->right);
+			return leftLeaf + rightLeaf;
 		}
 	}
+	return 0;
+}
+
+int GetNodeLevel(ElementType num, SearchTree* BST)
+{
+	int level = 1;
+	while(BST)
+	{
+		if(num > BST->data)
+		{
+			BST = BST->right;
+			level++;
+		}
+		else if(num < BST->data)
+		{
+			BST = BST->left;
+			level++;
+		}
+		else if(num == BST->data)
+		{
+			return level;
+		}
+	}
+	return 0;
+}
+
+void PrintRouteToLeaf(SearchTree* BST, Stack* s)
+{
+	if(BST)
+	{
+		if( !BST->left && !BST->right)
+		{
+			Stack *temp = s->next;
+			int a[100];
+			int i=0;
+			while(temp != NULL)
+			{
+				a[i] = temp->data->data;
+				temp = temp->next;
+				i++;
+			}
+			i--;
+			while(i >= 0)
+			{
+				printf("%d ", a[i]);
+				i--;
+			}
+			printf("%d\n", BST->data);
+		}
+		else
+		{
+			Push(BST, s);
+			PrintRouteToLeaf(BST->left, s);
+			PrintRouteToLeaf(BST->right, s);
+			//back to last level, so pop.
+			Pop(s);
+		}
+	}	
+}
+
+void PrintLeaf(SearchTree *BST)
+{
+	if(BST)
+	{
+		if(!BST->left && !BST->right)
+		{
+			printf("%d ", BST->data);
+		}
+		PrintLeaf(BST->left);
+		PrintLeaf(BST->right);
+	}	
 }
 
 void PreTrav(SearchTree *BST)
@@ -167,17 +287,22 @@ void PreTrav(SearchTree *BST)
 	}
 }
 
-int main(int argc, char const *argv[])
+void InTrav(SearchTree *BST)
 {
-	SearchTree* BST = CreatRoot(10);
-	Insert(4, BST);
-	Insert(12,BST);
-	Insert(1, BST);
-	Insert(11,BST);
-	Insert(15,BST);
-	//PreTrav(BST);
-	//printf("%d\n", Find(11, BST)->data);
-	Delete(15, BST);
-	PreTrav(BST);	
-	return 0;
+	if(BST)
+	{
+		InTrav(BST->left);
+		printf("%d ", BST->data);
+		InTrav(BST->right);
+	}
+}
+
+void PostTrav(SearchTree *BST)
+{
+	if(BST)
+	{
+		PostTrav(BST->left);
+		PostTrav(BST->right);
+		printf("%d ", BST->data);
+	}
 }
