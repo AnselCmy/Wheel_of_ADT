@@ -16,8 +16,15 @@ int main(int argc, char const *argv[])
 	//PreTrav(BST);
 	//printf("\n");	
 	printf("Height: %d\n", GetHeight(BST) );
+	
 	printf("NodeNum: %d\n", GetNodeNum(BST) );
+	
 	printf("leafNum: %d\n", GetLeafNum(BST) );
+	
+	int leafNum = 0;
+	GetLeafNum2(BST, leafNum);
+	printf("leafNum: %d\n", leafNum);  
+	
 	printf("level of 1: %d\n", GetNodeLevel(1, BST) );
 	printf("leaf: \n");
 	PrintLeaf(BST);

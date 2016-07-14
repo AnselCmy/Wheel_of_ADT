@@ -207,6 +207,17 @@ int GetLeafNum(SearchTree *BST)
 	return 0;
 }
 
+void GetLeafNum2(SearchTree *BST, int &num)
+{
+	if(BST)
+	{
+		if( !BST->right && !BST->left )
+			num++;
+		GetLeafNum2(BST->left,  num);
+		GetLeafNum2(BST->right,  num);
+	}
+}
+
 int GetNodeLevel(ElementType num, SearchTree* BST)
 {
 	int level = 1;
@@ -232,7 +243,7 @@ int GetNodeLevel(ElementType num, SearchTree* BST)
 
 void PrintRouteToLeaf(SearchTree* BST, Stack* s)
 {
-	if(BST)
+	if(BST)  //***importan*** if some nodes only has one child
 	{
 		if( !BST->left && !BST->right)
 		{
