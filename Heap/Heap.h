@@ -39,6 +39,7 @@ MaxHeap* CreatMaxHeapWithArray(ElementType* num, int len) //传入数组来建�
 	int parent = h->size/2;
 	for(parent; parent >= 1; parent--)
 	{
+		//和DeleteMax的方法一样
 		int temp = h->data[parent];
 		for(parent; 2*parent<=h->size; parent = child)
 		{
