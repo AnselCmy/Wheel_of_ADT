@@ -52,7 +52,7 @@ void PrintStack(Stack* s)
     printf("\n");
 }
 
-void PrintStackConvet(Stack* s)
+void PrintStackInverted(Stack* s)
 {
     Stack *temp = s->next;
     stackET a[100];
