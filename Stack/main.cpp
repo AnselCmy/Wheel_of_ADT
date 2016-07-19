@@ -12,5 +12,5 @@ int main()
 	Pop(stack);
 	PrintStack(stack);
 	printf("%d\n", Top(stack));
-	printf("Hello World!");
+	PrintStackInverted(stack);
 }

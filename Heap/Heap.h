@@ -21,46 +21,52 @@ MaxHeap* CreatMaxHeap(int c) //c指的时堆的capacity
 	return h;
 }
 
-MaxHeap* CreatMaxHeapWithArray(ElementType* num, int len) //传入数组来建立堆
+//这里的PercDown()就是下滤节点， 在delete和creat里面可以简化代码
+void PercDown(ElementType a[], int start, int end)  //a时需要变成符合堆的条件的数组，
+													//start是这个堆的头节点，end是尾
 {
+	int child;
+	int parent = start;
+	ElementType temp = a[start]; //保存头节点的数值
+	for(parent; parent*2 <= end; parent = child)
+	{
+		child = 2*parent; //先指向左儿子
+		if(2*parent+1<=end && a[child +1] > a[child])
+		{
+			child++;  //如果右边大，则指向右儿子
+		}
+
+		if(temp >= a[child])
+		{
+			break;
+		}
+		else
+		{
+			a[parent] = a[child];
+		}
+	}
+	a[parent] = temp;
+}	
+
+//增加了PercDown()函数之后修改的creat函数
+MaxHeap* CreatMaxHeapWithArray(ElementType* num, int len)
+{
+	//先动态内存分配
 	MaxHeap *h = (MaxHeap*)malloc(sizeof(MaxHeap));
 	h->size = len;
 	h->capacity = len;
 	h->data = (ElementType*)malloc(sizeof(ElementType) * (len+1));
 	h->data[0] = MaxData;
-
 	int i;
 	for(i=1; i<=len; i++)
 	{
 		h->data[i] = num[i-1];  //先把所有数据放入堆中
 	}
-
-	int child;
-	int parent = h->size/2;
-	for(parent; parent >= 1; parent--)
+	
+	for(i=len/2; i>0; i--) //从最右下角的堆慢慢开始建立
 	{
-		//和DeleteMax的方法一样
-		int temp = h->data[parent];
-		for(parent; 2*parent<=h->size; parent = child)
-		{
-			child = 2*parent;  //先指向左儿子
-			if( (2*parent+1) <= h->size && h->data[child] < h->data[child+1] )
-			{
-				child++;  //把最大的儿子的位置赋值给child
-			}
-
-			if( temp >= h->data[child] )  //temp一直悬在空中，并未赋值给谁，一直拿来作比较
-			{
-				break;
-			}
-			else
-			{
-				h->data[parent] = h->data[child];
-			}
-		}
-		h->data[parent] = temp;
+		PercDown(h->data, i, len);
 	}
-
 	return h;
 }
 
@@ -89,6 +95,7 @@ void Insert(ElementType num, MaxHeap* h)
 	h->data[i] = num;
 }	
 
+//增加了PrecDown()之后的delete
 ElementType DeleteMax(MaxHeap* h)
 {
 	if( IsEmpty(h) )
@@ -98,27 +105,9 @@ ElementType DeleteMax(MaxHeap* h)
 	}
 	else
 	{
-		int parent, child;
-		int deleteData = h->data[1];  //保存根节点的值，因为最后需要返回
-		int temp = h->data[h->size--];  //size = size - 1
-		for(parent=1; 2*parent<=h->size; parent = child)
-		{
-			child = 2*parent;  //先指向左儿子
-			if( (2*parent+1) <= h->size && h->data[child] < h->data[child+1] )
-			{
-				child++;  //把最大的儿子的位置赋值给child
-			}
-
-			if( temp >= h->data[child] )  //temp一直悬在空中，并未赋值给谁，一直拿来作比较
-			{
-				break;
-			}
-			else
-			{
-				h->data[parent] = h->data[child];
-			}
-		}
-		h->data[parent] = temp;
+		ElementType deleteData = h->data[1]; //保存根节点，为了最后需要返回这个值
+		h->data[1] = h->data[h->size--]; //直接拿最后一个值覆盖根节点，然后向下过滤
+		PercDown(h->data, 1, h->size);
 		return deleteData;
 	}
 }
