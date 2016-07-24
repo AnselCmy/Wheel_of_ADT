@@ -22,7 +22,7 @@ MaxHeap* CreatMaxHeap(int c) //c指的时堆的capacity
 }
 
 //这里的PercDown()就是下滤节点， 在delete和creat里面可以简化代码
-void PercDown(ElementType a[], int start, int end)  //a时需要变成符合堆的条件的数组，
+void PercDown(ElementType a[], int start, int end)  //a是需要变成符合堆的条件的数组，
 													//start是这个堆的头节点，end是尾
 {
 	int child;
