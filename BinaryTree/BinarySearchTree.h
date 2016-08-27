@@ -19,7 +19,7 @@ SearchTree* CreatRoot(ElementType num)
 
 SearchTree* Insert(ElementType num, SearchTree* BST)
 {
-	if(BST == NULL)
+	if(BST == NULL)  
 	{
 		BST = (SearchTree*)malloc(sizeof(SearchTree));
 		BST->data = num;
@@ -101,6 +101,22 @@ SearchTree* FindMin(SearchTree* BST)
 	}
 }
 
+SearchTree* FindMinIter(SearchTree* BST)
+{
+	if(!BST)
+	{
+		return NULL;
+	}
+	else
+	{
+		while(BST->left != NULL)
+		{
+			BST = BST->left;
+		}
+		return BST;
+	}
+}
+
 SearchTree* FindMax(SearchTree* BST)
 {
 	if(BST == NULL)
@@ -117,6 +133,22 @@ SearchTree* FindMax(SearchTree* BST)
 		{
 			return BST;
 		}
+	}
+}
+
+SearchTree* FindMaxIter(SearchTree* BST)
+{
+	if(!BST)
+	{
+		return NULL;
+	}
+	else
+	{
+		while(BST->right != NULL)
+		{
+			BST = BST->right;
+		}
+		return BST;
 	}
 }
 
@@ -164,7 +196,7 @@ int GetHeight(SearchTree *BST)
 	if(BST == NULL)
 	{
 		return 0;
-	} 
+	}
 	else 
 	{
 		leftHeight = GetHeight(BST->left);

@@ -17,26 +17,31 @@ Stack* CreatStack()
 
 int IsEmpty(Stack* s)
 {
-      return s->next == NULL;
+	return s->next == NULL;
 }
-
+    	
 void Push(stackET num, Stack* s)
 {
 	Stack* temp = (Stack*)malloc(sizeof(Stack));
-      temp->data = num;
-      temp->next = s->next;
+	temp->data = num;
+	temp->next = s->next;
   	s->next = temp;
 }
 
-void Pop(Stack* s)
+stackET Pop(Stack* s)
 {
 	if(IsEmpty(s))
-      		printf("Empty stack!");
+	{
+		printf("Empty stack!");
+		return 0;
+	}
 	else
 	{
-      		Stack* temp = s->next;
-      		s->next = s->next->next;
-      		free(temp);
+  		Stack* temp = s->next;
+  		stackET tempData = temp->data;
+  		s->next = s->next->next;
+  		free(temp);
+  		return tempData;
 	}
 }
 
@@ -87,9 +92,9 @@ void MakeEmpty(Stack* s)
 {
 	if(s)
 	{
-		s = s->next;
-		Stack* temp = s->next;
-		free(s);
-		s = temp; 
+		while(!IsEmpty(s))
+			Pop(s);
 	}
+	else 
+		printf("No such stack!");
 }

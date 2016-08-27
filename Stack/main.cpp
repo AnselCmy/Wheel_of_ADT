@@ -9,8 +9,17 @@ int main()
 	Push(6, stack);
 	Push(2, stack);
 	PrintStack(stack);
+	
 	Pop(stack);
 	PrintStack(stack);
-	printf("%d\n", Top(stack));
+	
+	printf("Top element:%d\n", Top(stack));
+	printf("Inverted:");
 	PrintStackInverted(stack);
+	
+	printf("%d\n", Pop(stack));
+	PrintStack(stack);
+
+	MakeEmpty(stack);
+	PrintStack(stack);
 }

@@ -14,7 +14,11 @@ int main(int argc, char const *argv[])
 	//printf("%d\n", Find(11, BST)->data);
 	//Delete(15, BST);
 	//PreTrav(BST);
-	//printf("\n");	
+	//printf("\n");
+	printf("MaxNum: %d\n", FindMax(BST)->data);
+	printf("MaxNum: %d\n", FindMaxIter(BST)->data);
+	printf("MinNum: %d\n", FindMin(BST)->data);
+	printf("MinNum: %d\n", FindMinIter(BST)->data);
 	printf("Height: %d\n", GetHeight(BST) );
 	
 	printf("NodeNum: %d\n", GetNodeNum(BST) );
