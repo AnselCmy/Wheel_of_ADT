@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #define stackET int
 //line 49 and 69, the output need to be caution
-typedef struct StackNode
+
+extern typedef struct StackNode
 {
 	stackET data;
 	struct StackNode* next;

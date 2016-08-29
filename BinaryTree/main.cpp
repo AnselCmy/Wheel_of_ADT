@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "Struct_Define.h"
 #include "BinarySearchTree.h"
 
 int main(int argc, char const *argv[])
@@ -29,7 +30,11 @@ int main(int argc, char const *argv[])
 	GetLeafNum2(BST, leafNum);
 	printf("leafNum: %d\n", leafNum);  
 	
-	printf("level of 1: %d\n", GetNodeLevel(1, BST) );
+	printf("level of 1: %d\n", GetNodeLevelIter(1, BST));
+	int level;
+	GetNodeLevel(12, BST, level);
+	printf("level of 12: %d\n", level);
+	
 	printf("leaf: \n");
 	PrintLeaf(BST);
 	printf("\n");

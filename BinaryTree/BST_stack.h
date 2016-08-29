@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define stackET SearchTree*
+// #include "Struct_Define.cpp"
+// #define stackET SearchTree*
 
-typedef struct TreeNode SearchTree;
+// typedef struct TreeNode SearchTree;
 
-typedef struct StackNode
-{
-    	stackET data;
-    	struct StackNode* next;
-}Stack;
+// typedef struct StackNode
+// {
+//     	// stackET data;
+//         SearchTree* data;
+//     	struct StackNode* next;
+// }Stack;
     
 Stack* CreatStack()
 {
@@ -51,4 +53,35 @@ stackET Top(Stack* s)
 	}
 	else
 		return s->next->data;
+}
+
+void PrintStack(Stack* s)
+{
+    s = s->next;
+    printf("Top->");
+    while(s != NULL)
+    {
+        printf("%d ", s->data->data);
+        s = s->next;
+    }
+    printf("\n");
+}
+
+void PrintStackInverted(Stack* s)
+{
+    Stack *temp = s->next;
+    int a[100];
+    int i=0;
+    while(temp != NULL)
+    {
+        a[i] = temp->data->data;
+        temp = temp->next;
+        i++;
+    }
+    i--;
+    while(i >= 0)
+    {
+        printf("%d ", a[i]);
+        i--;
+    }
 }

@@ -1,14 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "BST_stack.h"
-#define ElementType int
+// #include "Struct_Define.cpp"
+// #define ElementType int
 
-typedef struct TreeNode 
-{
-	ElementType data;
-	struct TreeNode* left;
-	struct TreeNode* right;
-}SearchTree;
+// typedef struct TreeNode 
+// {
+// 	ElementType data;
+// 	struct TreeNode* left;
+// 	struct TreeNode* right;
+// }SearchTree;
 
 SearchTree* CreatRoot(ElementType num)
 {
@@ -88,7 +89,7 @@ SearchTree* FindMin(SearchTree* BST)
 	{
 		return NULL;
 	}
-	else
+	else        
 	{
 		if(BST->left != NULL)
 		{
@@ -241,6 +242,7 @@ int GetLeafNum(SearchTree *BST)
 
 void GetLeafNum2(SearchTree *BST, int &num)
 {
+	num = 0;
 	if(BST)
 	{
 		if( !BST->right && !BST->left )
@@ -250,7 +252,32 @@ void GetLeafNum2(SearchTree *BST, int &num)
 	}
 }
 
-int GetNodeLevel(ElementType num, SearchTree* BST)
+void GetNodeLevel(ElementType num, SearchTree* BST, int &level)
+{
+	if(!BST)
+	{
+		return;
+	}
+	else 
+	{
+		if(num > BST->data)
+		{
+			GetNodeLevel(num, BST->right, level);
+			level++;
+		}
+		else if(num < BST->data)
+		{
+			GetNodeLevel(num, BST->left, level);
+			level++;
+		}
+		else if(num == BST->data)
+		{
+			level++;
+		}
+	}
+}
+
+int GetNodeLevelIter(ElementType num, SearchTree* BST)
 {
 	int level = 1;
 	while(BST)
@@ -275,26 +302,12 @@ int GetNodeLevel(ElementType num, SearchTree* BST)
 
 void PrintRouteToLeaf(SearchTree* BST, Stack* s)
 {
-	if(BST)  //***importan*** if some nodes only has one child
+	if(BST)  //***important*** if some nodes only have one child
 	{
 		if( !BST->left && !BST->right)
 		{
-			Stack *temp = s->next;
-			int a[100];
-			int i=0;
-			while(temp != NULL)
-			{
-				a[i] = temp->data->data;
-				temp = temp->next;
-				i++;
-			}
-			i--;
-			while(i >= 0)
-			{
-				printf("%d ", a[i]);
-				i--;
-			}
-			printf("%d\n", BST->data);
+			PrintStackInverted(s); 
+			printf("%d\n", BST->data); // this data is not in stack 
 		}
 		else
 		{

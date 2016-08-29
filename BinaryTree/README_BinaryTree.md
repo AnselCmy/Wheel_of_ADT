@@ -26,7 +26,8 @@ int GetHeight(SearchTree *BST)
 int GetNodeNum(SearchTree *BST)
 int GetLeafNum(SearchTree *BST)
 void GetLeafNum2(SearchTree *BST, int &num)
-int GetNodeLevel(ElementType num, SearchTree* BST)
+void GetNodeLevel(ElementType num, SearchTree* BST, int &level)
+int GetNodeLevelIter(ElementType num, SearchTree* BST)
 void PrintRouteToLeaf(SearchTree* BST, Stack* s)
 void PrintLeaf(SearchTree *BST)
 void PreTrav(SearchTree *BST)
@@ -57,3 +58,16 @@ void PostTrav(SearchTree *BST)
 
 - `int GetHeight(SearchTree *BST)`    
     + 采用递归的思想，一棵树的高度是指左子树和右子树中最大的，当一个节点没有左子树和右子树的时候，则高度为1。递归的递进动作是在GetHeight(BST->left)里面完成的。
+
+- `int GetLeafNum(SearchTree *BST)`
+    + GetHeight,GetNodeNum,GetLeafNum都是用的一种递归的方法，一层一层向下递归，直到到最后一层可以确定一个数值，比如自己是NULL的时候，则高度是0，此时节点数也是0。
+    + 注意到GetHeight,GetNodeNum 与 GetLeafNum之间还是有一点差别，前者的两个每次return都会加一，而后者不会
+
+- `void GetNodeLevel(ElementType num, SearchTree* BST, int &level)`
+    + 这里加入了一个引用，因为在递归里面，如果把记录level的变量放在函数里面声明的话，会有变量范围的问题，所以声明在外面，用来记录。
+
+- `int GetNodeLevelIter(ElementType num, SearchTree* BST)`
+    + 用迭代的方法，循环到参数所指定的数值的时候。
+
+
+ 
