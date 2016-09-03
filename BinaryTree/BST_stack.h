@@ -15,13 +15,13 @@
 Stack* CreatStack()
 {
 	Stack* s = (Stack*)malloc(sizeof(Stack));
-    	s->next = NULL;
-    	return s;
+	s->next = NULL;
+	return s;
 }
 
 int IsEmpty(Stack* s)
 {
-    	return s->next == NULL;
+    return s->next == NULL;
 }
 
 void Push(stackET num, Stack* s)
