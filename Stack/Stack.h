@@ -3,7 +3,7 @@
 #define stackET int
 //line 49 and 69, the output need to be caution
 
-extern typedef struct StackNode
+typedef struct StackNode
 {
 	stackET data;
 	struct StackNode* next;
@@ -49,7 +49,7 @@ stackET Pop(Stack* s)
 void PrintStack(Stack* s)
 {
 	s = s->next;
-	printf("Top->");
+	//printf("Top->");
 	while(s != NULL)
 	{
 		printf("%d ", s->data);

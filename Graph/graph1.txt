@@ -1,0 +1,7 @@
+UDG
+a b c d
+a b 
+c d 
+d c 
+a c 
+c a
